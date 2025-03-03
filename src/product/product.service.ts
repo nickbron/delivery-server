@@ -74,14 +74,16 @@ export class ProductService {
         return products
     }
 
-    async create() {
+    async create(dto: ProductDto) {
+        const { description, image, price, name, categoryId } = dto
         const product = await this.prisma.product.create({
             data: {
-                description: 'fdfdfaaaaad',
-                name: 'coca cola',
-                price: 0,
-                slug: 'coca cola',
-                image: '',
+                description: description,
+                image: image,
+                price: price,
+                name: name,
+                slug: generateSlug(dto.name),
+                categoryId: categoryId,
             },
         })
 
@@ -91,7 +93,7 @@ export class ProductService {
     async update(id: string, dto: ProductDto) {
         const { description, image, price, name, categoryId } = dto
 
-        await this.categoryService.getById(categoryId)
+        // await this.categoryService.getById(categoryId)
 
         return this.prisma.product.update({
             where: {

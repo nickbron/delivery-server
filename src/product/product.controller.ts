@@ -27,8 +27,8 @@ export class ProductController {
     @HttpCode(200)
     @Post()
     @Auth()
-    async create() {
-        return this.productService.create()
+    async create(@Body() dto: ProductDto) {
+        return this.productService.create(dto)
     }
 
     @UsePipes(new ValidationPipe())
